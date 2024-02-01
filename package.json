@@ -1,5 +1,5 @@
 {
-  "name": "makert-admin",
+  "name": "market-admin",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -11,13 +11,24 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
+    "@angular/cdk": "^14.2.6",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
     "@angular/forms": "^16.2.0",
+    "@angular/material": "^14.2.6",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "bootstrap": "^4.6.2",
+    "bootstrap-icons": "^1.11.3",
+    "jquery": "^3.7.1",
+    "jquey": "^0.0.1-security",
+    "moment": "^2.30.1",
+    "ngx-bootstrap": "^11.0.2",
+    "ngx-pagination": "^6.0.3",
+    "ngx-spinner": "^14.0.0",
+    "ngx-toastr": "^15.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
