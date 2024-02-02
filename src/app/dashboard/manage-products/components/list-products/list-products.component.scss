@@ -1,0 +1,102 @@
+button {
+  color: #FFF;
+  margin: 0 5px;
+  &.addProduct {
+      background-color: #ca085a;
+      color: #FFF;
+      padding: 2px 23px;
+      font-size: 20px;
+  }
+}
+
+:host ::ng-deep {
+  table {
+      th {
+          background-color: #bc1059!important;
+          .mat-header-cell {
+              color: #FFF;
+          }
+      }
+  }
+}
+
+.container-fluid {
+  margin-top: 20px;
+}
+
+.addProduct {
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.table th, .table td {
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  text-align: center;
+}
+
+.table th {
+  font-size: 15px;
+  color: #fff;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+
+
+.mat-slide-toggle {
+  margin: 0;
+}
+
+.btn-action {
+  margin-right: 5px;
+}
+
+.btn-danger, .btn-secondary {
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+
+
+
+

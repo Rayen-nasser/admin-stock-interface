@@ -1,0 +1,100 @@
+<div class="mt-4">
+  <form class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Search</mat-label>
+        <input
+          (keyup)="search($event.target)"
+          matInput
+          placeholder="title search"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>status</mat-label>
+        <mat-select (selectionChange)="selectCategory($event)">
+          <mat-option value="all"> all </mat-option>
+          <mat-option [value]="true"> Clients </mat-option>
+          <mat-option [value]="false"> Users </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="listBox table-container">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="table table-hover">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element; let index = index">
+            {{ index + 1 }}
+          </td>
+        </ng-container>
+
+        <!-- Profile Column -->
+        <ng-container matColumnDef="profile">
+          <th mat-header-cell *matHeaderCellDef>Profile</th>
+          <td mat-cell *matCellDef="let element">
+            <img
+              [src]="'assets/profile.jpg' || element?.profile"
+              alt="Profile Image"
+              height="40"
+              width="40"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+        </ng-container>
+
+        <!-- email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="w-20">Actions</th>
+          <td mat-cell *matCellDef="let element; let index = index">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="ConfirmDeleteUser(element._id)"
+              class="mx-2"
+            >
+              Delete
+            </button>
+            <mat-slide-toggle
+              [checked]="element.status === 'Active'"
+              (change)="toggleStatus(element._id)"
+              [attr.aria-label]="
+                element.status !== 'Active' ? 'Active' : 'In Active'
+              "
+            >
+              {{ element.status !== "Active" ? "Active" : "In Active" }}
+            </mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <div class="mt-5 d-flex justify-content-center">
+        <mat-paginator
+          (page)="onTableDataChange($event)"
+          [length]="total"
+          [pageSize]="filtration.limit"
+          [pageSizeOptions]="pageSizeOptions"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

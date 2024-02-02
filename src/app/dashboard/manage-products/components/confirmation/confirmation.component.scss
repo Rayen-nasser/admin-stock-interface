@@ -1,0 +1,59 @@
+/* DeleteTaskComponent styles */
+.mat-dialog-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+}
+
+.modal-header, .modal-footer {
+  padding: 15px;
+  border-bottom: 1px solid #dcdcdc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+// .close {
+//   font-size: 1.5rem;
+//   cursor: pointer;
+//   color: #000;
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: color 0.3s, background-color 0.3s, transform 0.3s;
+
+//   &:hover {
+//     color: white;
+//     background-color: red;
+//     transform: scale(1.2);
+//   }
+// }
+
+
+
+
+
+.modal-body {
+  padding: 15px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.modal-footer {
+  padding: 5px;
+  border: none;
+  display: flex;
+  justify-content: flex-end !important;
+}
+
+.btn {
+  margin-left: 8px;
+}

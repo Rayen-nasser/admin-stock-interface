@@ -1,0 +1,60 @@
+<div class="mt-5">
+  <form class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="w-100 custom-margin">
+        <mat-label>Search</mat-label>
+        <input
+          (keyup)="search($event.target)"
+          matInput
+          placeholder="title search"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>status</mat-label>
+        <mat-select (selectionChange)="selectMessages($event)">
+          <mat-option value="all"> All </mat-option>
+          <mat-option [value]="true"> Read It </mat-option>
+          <mat-option [value]="false"> Not Read </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="card-list">
+    <div class="card-item" *ngFor="let item of messages; let index = index">
+      <span
+        [ngClass]="{
+          developer: index == 0,
+          designer: index == 1,
+          editor: index == 2
+        }"
+        >{{ item.subject }}</span
+      >
+      <p class="lh-base">{{ item.body }}</p>
+      <div
+        class="arrow"
+        (click)="readIt(item._id)"
+        [ngClass]="{ readIt: item.isReadIt }"
+      >
+        <i class="bi bi-check2-all"></i>
+      </div>
+      <div class="card-corner">
+        <div class="name-email text-primary text-opacity-25">
+          <div>{{ item.name }}</div>
+          <h6>{{ item.email }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5 d-flex justify-content-center">
+    <mat-paginator
+      (page)="onTableDataChange($event)"
+      [length]="total"
+      [pageSize]="filtration.limit"
+      [pageSizeOptions]="pageSizeOptions"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>

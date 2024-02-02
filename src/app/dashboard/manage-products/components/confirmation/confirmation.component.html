@@ -1,0 +1,58 @@
+<!-- DeleteTaskComponent template -->
+<mat-dialog-content>
+  <!-- Your dialog content goes here -->
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Confirm {{ data ? "Delete " : "Ignorance Changes" }}
+    </h5>
+    <button mat-flat-button class="text-danger" (click)="closeAll()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure
+      {{
+        data
+          ? " to delete " + data.type
+          : "That You Want To Discard Your Changes"
+      }}
+      ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      *ngIf="data"
+      type="button"
+      class="btn btn-danger"
+      (click)="confirmDelete()"
+    >
+      Delete
+    </button>
+    <button
+      *ngIf="data"
+      type="button"
+      class="btn btn-secondary"
+      (click)="closeAll()"
+    >
+      Close
+    </button>
+
+    <button
+      *ngIf="!data"
+      type="button"
+      class="btn btn-success"
+      (click)="closeAll()"
+    >
+      Yes
+    </button>
+    <button
+      *ngIf="!data"
+      type="button"
+      class="btn btn-danger"
+      (click)="closeOnlyDialogConfirm()"
+    >
+      No
+    </button>
+  </div>
+</mat-dialog-content>

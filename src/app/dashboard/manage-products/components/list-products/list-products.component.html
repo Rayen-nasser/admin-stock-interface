@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  <div class="row justify-content-end">
+    <button class="addProduct btn btn-primary" mat-raised-button (click)="addProduct()">
+      Add Product
+    </button>
+  </div>
+
+  <form class="mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Name Product" (keyup)="search($event.target)" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Categories</mat-label>
+          <mat-select (selectionChange)="selectCategory($event)">
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start Date"
+              (dateChange)="selectDate($event.target, 'toDate')"
+            />
+            <input
+              matEndDate
+              placeholder="End Date"
+              (dateChange)="selectDate($event.target, 'fromDate')"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <div class="listBox table-container">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="table  table-hover responsive">
+        <!-- Number Column -->
+        <ng-container matColumnDef="No.">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element; let index = index">{{ index + 1 }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+        </ng-container>
+
+        <!-- Deadline Column -->
+        <ng-container matColumnDef="deadLineDate">
+          <th mat-header-cell *matHeaderCellDef>DeadLine Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.deadline }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="w-20">Status</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-slide-toggle
+            (change)="toggleStatus(element._id)"
+              [checked]="element.status === 'available'"
+              [attr.aria-label]="
+                element.status !== 'Available' ? 'Available' : 'In Available'
+              "
+            >
+              {{ element.status !== 'Available' ? 'Available' : 'In Available' }}
+            </mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button class="btn btn-danger btn-action" (click)="ConfirmDeleteProduct(element._id)">
+              Delete
+            </button>
+            <button class="btn btn-secondary btn-action" (click)="updateProduct(element)">
+              Edit
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <div class="mt-5 d-flex justify-content-center">
+        <mat-paginator (page)="onTableDataChange($event)"
+                       [length]="total"
+                       [pageSize]="filtration.limit"
+                       [pageSizeOptions]="pageSizeOptions"
+                       showFirstLastButtons
+                       aria-label="Select page">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
