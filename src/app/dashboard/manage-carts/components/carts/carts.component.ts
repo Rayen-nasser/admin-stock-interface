@@ -18,14 +18,15 @@ export class CartsComponent implements OnInit{
     'date',
     'quantity',
     'amountTotal',
-    'actions'
+    'view',
+    'delete'
   ];
 
   page: number = 1
   total : number = 0
   filtration: any = {
     page: this.page,
-    limit: 4,
+    limit: 3,
   };
   pageSizeOptions!: any;
   timeOut: any;
@@ -51,7 +52,7 @@ export class CartsComponent implements OnInit{
   }
 
   selectCart(event: any) {
-    
+
     this.filtration['accepted'] = event.value;
     this.page = 1;
     if (event.value !== 'all') {

@@ -6,7 +6,7 @@
         <input
           (keyup)="search($event.target)"
           matInput
-          placeholder="title search"
+          placeholder="Username Search"
         />
       </mat-form-field>
     </div>
@@ -37,7 +37,7 @@
           <th mat-header-cell *matHeaderCellDef>Profile</th>
           <td mat-cell *matCellDef="let element">
             <img
-              [src]="'assets/profile.jpg' || element?.profile"
+              [src]=" element?.profile || 'assets/profile.jpg'"
               alt="Profile Image"
               height="40"
               width="40"
@@ -57,27 +57,49 @@
           <td mat-cell *matCellDef="let element">{{ element.email }}</td>
         </ng-container>
 
-        <!-- actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="w-20">Actions</th>
-          <td mat-cell *matCellDef="let element; let index = index">
-            <button
-              mat-raised-button
-              color="warn"
-              (click)="ConfirmDeleteUser(element._id)"
-              class="mx-2"
+        <!-- edit Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="w-20">Status</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="checkbox-wrapper-8">
+              <input
+                type="checkbox"
+                id="cb3-8"
+                class="tgl tgl-skewed"
+                [checked]="element.status === 'Active'"
+                (change)="toggleStatus(element._id)"
+              />
+              <label
+                for="cb3-8"
+                [attr.data-tg-on]="element.status === 'Active' ? 'ON' : 'OFF'"
+                data-tg-off="OFF"
+                class="tgl-btn"
+              ></label>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- delete Column -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef style="width: 150px !important">
+            Delete
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            style="width: 150px !important; text-align: center"
+          >
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
             >
-              Delete
+            <button class="delete-button" (click)="ConfirmDeleteUser(element._id)">
+              <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                <path
+                  d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"
+                ></path>
+              </svg>
             </button>
-            <mat-slide-toggle
-              [checked]="element.status === 'Active'"
-              (change)="toggleStatus(element._id)"
-              [attr.aria-label]="
-                element.status !== 'Active' ? 'Active' : 'In Active'
-              "
-            >
-              {{ element.status !== "Active" ? "Active" : "In Active" }}
-            </mat-slide-toggle>
+            </div>
           </td>
         </ng-container>
 

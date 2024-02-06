@@ -53,8 +53,8 @@
     <!-- Address Section -->
     <div class="address-details">
       <p><strong>Address:</strong> {{ data.address.properties.formatted || ""}}</p>
-      <p><strong>Street:</strong> {{ data.address.properties.street || ""}}</p>
-      <p><strong>City:</strong> {{ data.address.properties.city || ""}}</p>
+      <p *ngIf="data.address.properties.street"><strong>Street:</strong> {{ data.address.properties.street || ""}}</p>
+      <p *ngIf="data.address.properties.city"><strong>City:</strong> {{ data.address.properties.city || ""}}</p>
       <p><strong>State:</strong> {{ data.address.properties.state || ""}}</p>
       <!-- <p><strong>Country:</strong> {{ data.address.properties.country }}</p> -->
       <p>

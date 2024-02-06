@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-list-products',
@@ -21,13 +21,14 @@ export class ListProductsComponent implements OnInit{
     'deadLineDate',
     'price',
     'status',
-    'actions',
+    'edit',
+    'delete'
   ];
   page: number = 1
   total : number = 0
   filtration: any = {
     page: this.page,
-    limit: 4,
+    limit: 3,
   };
   pageSizeOptions!: any;
   timeOut: any;
@@ -109,7 +110,7 @@ export class ListProductsComponent implements OnInit{
   selectDate(event : any, type: string){
     this.page = 1;
     this.filtration['page'] = 1;
-    this.filtration[type] = moment(event.value).format('DD-MM-YYYY');
+    this.filtration[type] = event.value;
     if (type !== 'toDate' && this.filtration['toDate'] !== 'Invalid date') {
       this.getAllProducts();
     }

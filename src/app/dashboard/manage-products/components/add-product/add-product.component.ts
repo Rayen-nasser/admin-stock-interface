@@ -85,8 +85,8 @@ export class AddProductComponent  implements OnInit{
     createProduct() {
 
       let model =  this.prepareFormData()
-      this.productsService.addProduct(model).subscribe(res => {
-        this.toaster.success("Product Created Successfully" , "Success")
+      this.productsService.addProduct(model).subscribe((res: any) => {
+        this.toaster.success(res.message)
         this.dialog.close(true)
       })
     }
@@ -94,8 +94,8 @@ export class AddProductComponent  implements OnInit{
     updateProduct(){
 
       let model =  this.prepareFormData()
-      this.productsService.editProduct(this.data._id ,model).subscribe(res => {
-        this.toaster.success("Product Created Successfully" , "Success")
+      this.productsService.editProduct(this.data._id ,model).subscribe((res: any) => {
+        this.toaster.success(res.message)
         this.dialog.close(true)
       })
     }

@@ -62,7 +62,7 @@ export class ListMessagesComponent implements OnInit {
   }
 
   onTableDataChange(event: any) {
-    this.page = event.pageIndex + 1; 
+    this.page = event.pageIndex + 1;
     this.filtration.page = this.page;
     this.getAllMessages();
   }

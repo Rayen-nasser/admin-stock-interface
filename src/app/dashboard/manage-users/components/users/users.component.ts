@@ -15,7 +15,8 @@ export class UsersComponent implements OnInit{
     'profile',
     'name',
     'email',
-    'actions',
+    'status',
+    'delete'
   ];
 
   dataSource: any = [];
