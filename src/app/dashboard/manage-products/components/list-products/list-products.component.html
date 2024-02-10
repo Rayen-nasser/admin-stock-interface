@@ -63,10 +63,10 @@
         class="table table-hover responsive"
       >
         <!-- Number Column -->
-        <ng-container matColumnDef="No.">
-          <th mat-header-cell *matHeaderCellDef>No.</th>
+        <ng-container matColumnDef="marque">
+          <th mat-header-cell *matHeaderCellDef>Marque</th>
           <td mat-cell *matCellDef="let element; let index = index">
-            {{ index + 1 }}
+            {{element.marque || "N/A"}}
           </td>
         </ng-container>
 
@@ -90,7 +90,7 @@
 
         <!-- Deadline Column -->
         <ng-container matColumnDef="deadLineDate">
-          <th mat-header-cell *matHeaderCellDef>DeadLine Date</th>
+          <th mat-header-cell *matHeaderCellDef>DeadLine</th>
           <td mat-cell *matCellDef="let element">{{ element.deadline }}</td>
         </ng-container>
 
@@ -118,15 +118,15 @@
           </td>
         </ng-container>
 
-       <!-- Action Column -->
+       <!-- Edit Column -->
        <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef style="width: 170px !important">
+        <th mat-header-cell *matHeaderCellDef style="width: 132px !important">
           Edit
         </th>
         <td
           mat-cell
           *matCellDef="let element"
-          style="width: 170px !important; text-align: center"
+          style="width: 132px !important; text-align: center"
         >
           <div
             style="display: flex; flex-direction: column; align-items: center"
@@ -144,13 +144,13 @@
 
       <!-- Delete Column -->
       <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef style="width: 150px !important">
+        <th mat-header-cell *matHeaderCellDef style="width: 132px !important">
           Delete
         </th>
         <td
           mat-cell
           *matCellDef="let element"
-          style="width: 150px !important; text-align: center"
+          style="width: 132px !important; text-align: center"
         >
           <div
             style="display: flex; flex-direction: column; align-items: center"

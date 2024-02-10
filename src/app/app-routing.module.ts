@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './core/guards/admin.guard';
 import { NoAuthGuard } from './core/guards/no-auth.guard';
+import { ForgetPasswordComponent } from './auth/components/forget-password/forget-password.component';
 
 const routes: Routes = [
   {path:'',
@@ -12,7 +13,8 @@ const routes: Routes = [
   loadChildren: () => import(`./auth/auth.module`).then(m => m.AuthModule),
   canActivate: [NoAuthGuard]
   },
-
+  {path:"forget-password", component: ForgetPasswordComponent},
+  {path:"forget-password/:userId/:token", component: ForgetPasswordComponent},
 ];
 
 @NgModule({

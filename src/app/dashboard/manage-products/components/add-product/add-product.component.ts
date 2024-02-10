@@ -17,6 +17,7 @@ export class AddProductComponent  implements OnInit{
   newProductForm!: FormGroup
   oldProductForm!: any
   categories : any
+  writeCategory: boolean = false
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
@@ -37,6 +38,7 @@ export class AddProductComponent  implements OnInit{
     createForm() {
       this.newProductForm = this.fb.group({
         name: [this.data?.name || "", [Validators.required, Validators.minLength(5)]],
+        marque: [this.data?.marque || "", Validators.required],
         description: [this.data?.description || "", Validators.required],
         deadline: [this.parseDate(this.data?.deadline) || "", Validators.required],
         imageUrl: [this.data?.imageUrl || "", Validators.required],

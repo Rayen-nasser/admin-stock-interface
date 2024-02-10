@@ -5,10 +5,12 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     CommonModule,

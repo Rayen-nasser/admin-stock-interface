@@ -15,8 +15,8 @@ export class ListProductsComponent implements OnInit{
   categories: any = []
   dataSource: any = []
   displayedColumns: string[] = [
-    'No.',
     'name',
+    'marque',
     'quantity',
     'deadLineDate',
     'price',

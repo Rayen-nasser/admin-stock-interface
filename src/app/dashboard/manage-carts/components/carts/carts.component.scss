@@ -51,4 +51,10 @@ button {
   margin: 0;
 }
 
+.accepted {
+  background-color: #C6E2FF; /* Light blue for accepted items */
+}
 
+.not-accepted {
+  background-color: #FFCCCC; /* Light pink for not yet accepted items */
+}

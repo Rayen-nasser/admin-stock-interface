@@ -9,21 +9,39 @@
   </header>
   <form [formGroup]="newProductForm">
     <div class="row mt-3">
-      <div class="col-md-12">
-        <mat-form-field appearance="outline" class="w-100">
+      <div class="col-md-12 " >
+        <mat-form-field appearance="outline" class="w-50" >
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" placeholder="Write Name" />
         </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>Marque</mat-label>
+          <input matInput formControlName="marque" placeholder="Write Name" />
+        </mat-form-field>
       </div>
       <div class="col-md-12">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Category</mat-label>
-          <mat-select formControlName="category">
-            <mat-option *ngFor="let category of categories" [value]="category">
-              {{ category }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="row">
+          <mat-form-field *ngIf="!writeCategory" appearance="outline" class="col-9">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category" >
+              <mat-option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="writeCategory"  appearance="outline" class="col-10">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" placeholder="Write Category" />
+          </mat-form-field>
+          <span class="col-2 mt-3">
+            <input type="checkbox" id="checkbox" [value]="writeCategory" (change)="writeCategory = !writeCategory">
+            <label for="checkbox" class="toggle">
+                <div class="bars" id="bar1"></div>
+                <div class="bars" id="bar2"></div>
+                <div class="bars" id="bar3"></div>
+            </label>
+          </span>
+        </div>
       </div>
       <div class="col-md-12 my-3">
         <mat-form-field appearance="outline" class="w-100">

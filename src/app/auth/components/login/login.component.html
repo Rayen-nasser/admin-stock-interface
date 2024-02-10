@@ -1,39 +1,47 @@
-<div class="login d-flex justify-content-center align-items-center m-auto">
-  <!-- <div class="row"> -->
-    <!-- <div class="col-md-6">
-      <div class="overlay"></div>
-      <img
-        src="assets/desola-lanre-ologun-zYgV-NGZtlA-unsplash.jpg"
-        alt=""
+<div class="container">
+  <div class="img">
+    <img src="/assets/login.gif" alt="login" />
+  </div>
+  <form class="form" [formGroup]="loginForm">
+    <p class="title">Login</p>
+    <p class="message">SignIn now and get full access to our app.</p>
+    <label>
+      <input
+        formControlName="email"
+        required=""
+        placeholder=""
+        type="email"
+        class="input"
       />
-    </div> -->
-    <div class="col-md-6">
-      <div class="h-100 d-flex align-items-center justify-content-center w-100">
-        <div class="box w-75">
-          <h2>Login</h2>
+      <span>Email</span>
+    </label>
 
-          <form [formGroup]="loginForm">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>email</mat-label>
-              <input matInput formControlName="email" placeholder="Write Your Email" />
-              <mat-error>required</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Password</mat-label>
-              <input
-                matInput
-                formControlName="password"
-                type="password"
-                placeholder="password"
-              />
-              <mat-error>required</mat-error>
-            </mat-form-field>
-          </form>
-          <div class="d-flex justify-content-center">
-            <button mat-raised-button color="warn" (click)="login()" [disabled]="loginForm.invalid">Login</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  <!-- </div> -->
+    <label>
+      <input
+        formControlName="password"
+        required=""
+        placeholder=""
+        type="password"
+        class="input"
+      />
+      <span>Password</span>
+    </label>
+
+    <button class="submit" (click)="login()" [disabled]="loginForm.invalid">
+      Submit
+    </button>
+    <button
+      class="submit"
+      style="
+        background-color: transparent;
+        color: #f44336;
+        border: #f44336 solid 1px;
+      "
+      routerLink="/forget-password"
+    >
+      Forget Password?
+    </button>
+  </form>
 </div>
+
+
