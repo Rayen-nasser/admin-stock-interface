@@ -5,44 +5,88 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationComponent } from 'src/app/dashboard/manage-products/components/confirmation/confirmation.component';
 import { ViewCartComponent } from '../view-cart/view-cart.component';
+import {
+  Observable,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs';
+import { SharedService } from 'src/app/dashboard/services/shared.service';
 
 @Component({
   selector: 'app-carts',
   templateUrl: './carts.component.html',
-  styleUrls: ['./carts.component.scss']
+  styleUrls: ['./carts.component.scss'],
 })
-export class CartsComponent implements OnInit{
-
+export class CartsComponent implements OnInit {
   displayedColumns: string[] = [
     'userId',
     'date',
     'quantity',
     'amountTotal',
     'view',
-    'delete'
+    'delete',
   ];
 
-  page: number = 1
-  total : number = 0
+  page: number = 1;
+  total: number = 0;
   filtration: any = {
     page: this.page,
-    limit: 3,
+    limit: 5,
   };
   pageSizeOptions!: any;
-  timeOut: any;
-  dataSource: any
+  dataSource: any;
+
+  optionData$!: Observable<string>;
+  searchData$!: Observable<string>;
 
   constructor(
     private cartsService: CartsService,
-    private toastr: ToastrService,
     public dialog: MatDialog,
-  ){}
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
-    this.getAllCarts()
+    combineLatest([
+      this.sharedService.getSearchData(),
+      this.sharedService.getOptionData(),
+    ])
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        tap(([searchData, optionData]) => {
+          this.page = 1;
+          this.filtration['page'] = 1;
+          // this.filtration['username'] = searchData;
+          this.setCartFilter(optionData);
+        })
+      )
+      .subscribe();
+
+    this.getAllCarts();
   }
 
-  selectDate(event : any, type: string){
+  private setCartFilter(optionData: string): void {
+    if (!optionData) {
+      return;
+    }
+
+    if (optionData === 'all') {
+      delete this.filtration['accepted'];
+    } else if (optionData === 'not yet') {
+      this.filtration['accepted'] = false;
+    } else {
+      this.filtration['accepted'] = true;
+    }
+
+    this.cartsService.getCarts(this.filtration).subscribe((res: any) => {
+      this.dataSource = res.carts;
+      this.total = res.totalItems;
+    });
+  }
+
+  selectDate(event: any, type: string) {
     this.page = 1;
     this.filtration['page'] = 1;
     this.filtration[type] = moment(event.value).format('DD-MM-YYYY');
@@ -51,25 +95,11 @@ export class CartsComponent implements OnInit{
     }
   }
 
-  selectCart(event: any) {
-
-    this.filtration['accepted'] = event.value;
-    this.page = 1;
-    if (event.value !== 'all') {
-      this.filtration['accepted'] = event.value;
-    } else {
-      delete this.filtration['accepted'];
-    }
-    this.getAllCarts();
-  }
-
-  getAllCarts(){
-    this.cartsService.getCarts(this.filtration).subscribe(
-      (response: any)=>{
-        this.dataSource = response.carts
-        this.total = response.totalItems
-      }
-    )
+  getAllCarts() {
+    this.cartsService.getCarts(this.filtration).subscribe((response: any) => {
+      this.dataSource = response.carts;
+      this.total = response.totalItems;
+    });
   }
 
   ConfirmDeleteCart(id: any) {
@@ -89,7 +119,7 @@ export class CartsComponent implements OnInit{
     });
   }
 
-  viewCart(products: any, userId: string, address: any ,cartId: string) {
+  viewCart(products: any, userId: string, address: any, cartId: string) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '800px';
@@ -101,7 +131,7 @@ export class CartsComponent implements OnInit{
       products,
       userId,
       address,
-      cartId
+      cartId,
     };
     const dialogRef = this.dialog.open(ViewCartComponent, dialogConfig);
 
@@ -111,8 +141,6 @@ export class CartsComponent implements OnInit{
   }
 
   onTableDataChange(event: any) {
-    console.log(event.pageIndex);
-
     this.page = event.pageIndex + 1; // Adjust if needed based on your API (0-based or 1-based)
     this.filtration.page = this.page;
     this.getAllCarts();

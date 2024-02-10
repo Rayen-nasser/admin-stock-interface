@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SharedService } from '../services/shared.service';
 import { ProductsService } from '../manage-products/service/products.service';
 
@@ -17,9 +17,24 @@ export class LayoutComponent implements OnInit {
   constructor(
     private router: Router,
     private sharedService: SharedService,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private activeRoute: ActivatedRoute
   ) {
-    this.getDataFromSubject();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const urlAfterRedirects = event.urlAfterRedirects || '';
+        const url = event.url || '';
+        if(['/products', ].includes(urlAfterRedirects)){
+          this.getDataFromSubject();
+        }else if(['/users', ].includes(urlAfterRedirects)){
+          this.categories = ['all', 'clients', 'just visiter']
+        }else if(['/carts', ].includes(urlAfterRedirects)){
+          this.categories = ['all', 'accepted', 'not yet']
+        }else{
+          this.categories = ['all', 'read', 'not yet']
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -34,13 +49,11 @@ export class LayoutComponent implements OnInit {
 
   getDataFromSubject() {
     this.productsService.categoriesData.subscribe((response: any) => {
-      this.categories = response.data;
+      this.categories = ['all', ...response.data];
     });
   }
 
   updateCategoryData(value: any): void {
-    console.log(value);
-
     this.sharedService.setOptionData(value);
   }
 

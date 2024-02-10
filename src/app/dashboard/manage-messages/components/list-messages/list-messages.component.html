@@ -1,28 +1,7 @@
 <div class="container-fluid">
-  <form class="row">
-    <div class="col-md-6">
-      <mat-form-field appearance="outline" class="w-100 custom-margin">
-        <mat-label>Search</mat-label>
-        <input
-          (keyup)="search($event.target)"
-          matInput
-          placeholder="title search"
-        />
-      </mat-form-field>
-    </div>
-    <div class="col-md-6">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>status</mat-label>
-        <mat-select (selectionChange)="selectMessages($event)">
-          <mat-option value="all"> All </mat-option>
-          <mat-option [value]="true"> Read It </mat-option>
-          <mat-option [value]="false"> Not Read </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </form>
+
   <div class="card-list">
-    <div class="card-item" *ngFor="let item of messages; let index = index">
+    <div class="card-item" *ngFor="let item of dataSource; let index = index">
       <span
         [ngClass]="{
           developer: index == 0,

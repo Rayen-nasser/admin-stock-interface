@@ -3,6 +3,8 @@ import { UsersService } from '../../service/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationComponent } from 'src/app/dashboard/manage-products/components/confirmation/confirmation.component';
+import { Observable, combineLatest, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import { SharedService } from 'src/app/dashboard/services/shared.service';
 
 @Component({
   selector: 'app-users',
@@ -28,16 +30,52 @@ export class UsersComponent implements OnInit{
   };
   pageSizeOptions!: any;
   timeout: any
+  searchData$!: Observable<string>;
+  optionData$!: Observable<string>;
 
   constructor(
     private service: UsersService,
     private toaster: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
-    this.getAllUsers()
+    combineLatest([
+      this.sharedService.getSearchData(),
+      this.sharedService.getOptionData()
+    ]).pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      tap(([searchData, optionData]) => {
+        this.page = 1;
+        this.filtration['page'] = 1;
+        this.filtration['username'] = searchData;
+        this.setClientFilter(optionData);
+      })
+    ).subscribe();
 
+    this.getAllUsers();
+  }
+
+  private setClientFilter(optionData: string): void {
+    if (!optionData) {
+      this.getAllUsers();
+      return;
+    }
+
+    if (optionData === 'all') {
+      delete this.filtration['isBeClient'];
+    } else if (optionData === 'just visitor') {
+      this.filtration['isBeClient'] = false;
+    } else {
+      this.filtration['isBeClient'] = true;
+    }
+
+    this.service.getUsers(this.filtration).subscribe((res: any) => {
+      this.dataSource = res.users;
+      this.total = res.totalItems;
+    });
   }
 
   getAllUsers(){
@@ -45,16 +83,6 @@ export class UsersComponent implements OnInit{
       this.dataSource = res.users
       this.total = res.totalItems
     })
-  }
-
-  search(event: any){
-    this.page = 1
-    this.filtration['page'] = 1
-    this.filtration['username'] = event.value
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(() => {
-      this.getAllUsers()
-    }, 2000);
   }
 
   ConfirmDeleteUser(id: any) {
@@ -90,10 +118,4 @@ export class UsersComponent implements OnInit{
     this.getAllUsers();
   }
 
-  selectCategory(event: any){
-    this.page = 1
-    this.filtration['page'] = 1
-    event.value !== 'all' ? this.filtration['isBeClient'] = event.value : delete this.filtration['isBeClient']
-    this.getAllUsers()
-  }
 }

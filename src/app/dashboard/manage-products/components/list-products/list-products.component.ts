@@ -4,7 +4,13 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, combineLatest, debounceTime, distinctUntilChanged, tap } from 'rxjs';
+import {
+  Observable,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs';
 import { SharedService } from 'src/app/dashboard/services/shared.service';
 
 @Component({
@@ -33,37 +39,40 @@ export class ListProductsComponent implements OnInit {
   };
   pageSizeOptions!: any;
   searchData$!: Observable<string>;
-  optionData$!: Observable<string>;
+  optionData$!: Observable<any>;
 
   constructor(
     public productsService: ProductsService,
     public dialog: MatDialog,
     private toaster: ToastrService,
     private sharedService: SharedService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     combineLatest([
       this.sharedService.getSearchData(),
-      this.sharedService.getOptionData()
-    ]).pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(([searchData, optionData]) => {
-        this.page = 1;
-        this.filtration['page'] = 1;
-        this.filtration['productName'] = searchData;
-        if (optionData) {
-          this.productsService.getProductsInCategory(optionData).subscribe((res: any) => {
-            this.dataSource = res.products;
-            this.total = res.totalItems;
-          });
-        } else {
-          this.getAllProducts();
-        }
-      })
-    ).subscribe();
+      this.sharedService.getOptionData(),
+    ])
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        tap(([searchData, optionData]) => {
+          this.page = 1;
+          this.filtration['page'] = 1;
+          this.filtration['productName'] = searchData;
+          if (optionData) {
+            optionData == 'all'
+              ? this.getAllProducts()
+              : this.productsService
+                  ?.getProductsInCategory(optionData)
+                  ?.subscribe((res: any) => {
+                    this.dataSource = res.products;
+                    this.total = res.totalItems;
+                  });
+          }
+        })
+      )
+      .subscribe();
 
     this.getAllProducts();
   }

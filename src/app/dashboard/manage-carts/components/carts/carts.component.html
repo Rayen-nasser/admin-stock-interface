@@ -1,42 +1,11 @@
 <div class="container-fluid">
-  <form class="row">
-    <div class="col-md-6">
-      <mat-form-field appearance="outline">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker" class="w-100">
-          <input
-            matStartDate
-            placeholder="Start Date"
-            (dateChange)="selectDate($event.target, 'toDate')"
-          />
-          <input
-            matEndDate
-            placeholder="End Date"
-            (dateChange)="selectDate($event.target, 'fromDate')"
-          />
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
-    </div>
-    <div class="col-md-6">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>status</mat-label>
-        <mat-select (selectionChange)="selectCart($event)">
-          <mat-option value="all"> All </mat-option>
-          <mat-option [value]="true"> Accepted </mat-option>
-          <mat-option [value]="false"> Not Yet </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </form>
 
   <div class="listBox table-container">
     <div class="mat-elevation-z8">
       <table
         mat-table
         [dataSource]="dataSource"
-        class="table table-hover responsive"
+        class="table table-hover responsive mt-5"
       >
         <!-- Position Column -->
         <ng-container matColumnDef="userId">

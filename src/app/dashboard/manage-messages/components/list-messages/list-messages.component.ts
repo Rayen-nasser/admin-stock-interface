@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from '../../services/messages.service';
 import { ToastrService } from 'ngx-toastr';
+import {
+  Observable,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs';
+import { SharedService } from 'src/app/dashboard/services/shared.service';
 
 @Component({
   selector: 'app-list-messages',
@@ -12,23 +20,61 @@ export class ListMessagesComponent implements OnInit {
   page: number = 1;
   filtration: any = {
     page: this.page,
-    limit: 4
+    limit: 4,
   };
   pageSizeOptions!: any;
-  timeout: any;
 
   constructor(
     private service: MessagesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService
   ) {}
-  messages: any;
+  dataSource: any;
+  optionData$!: Observable<string>;
+  searchData$!: Observable<string>;
+
   ngOnInit(): void {
+    combineLatest([
+      this.sharedService.getSearchData(),
+      this.sharedService.getOptionData(),
+    ])
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        tap(([searchData, optionData]) => {
+          this.page = 1;
+          this.filtration['page'] = 1;
+          this.filtration['subject'] = searchData;
+          this.setClientFilter(optionData);
+        })
+      )
+      .subscribe();
+
     this.getAllMessages();
+  }
+
+  private setClientFilter(optionData: string): void {
+    if (!optionData) {
+      return;
+    }
+
+    if (optionData === 'all') {
+      delete this.filtration['isReadIt'];
+    } else if (optionData === 'not yet') {
+      this.filtration['isReadIt'] = false;
+    } else {
+      this.filtration['isReadIt'] = true;
+    }
+
+    this.service.getMessages(this.filtration).subscribe((res: any) => {
+      this.dataSource = res.messages;
+      this.total = res.totalItems;
+    });
   }
 
   getAllMessages() {
     this.service.getMessages(this.filtration).subscribe((data: any) => {
-      this.messages = data.messages;
+      this.dataSource = data.messages;
       this.total = data.totalItems;
     });
   }
@@ -38,27 +84,6 @@ export class ListMessagesComponent implements OnInit {
       this.toastr.success(res.message);
       this.getAllMessages();
     });
-  }
-
-  search(event: any) {
-    this.page = 1;
-    this.filtration['page'] = 1;
-    this.filtration['subject'] = event.value;
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.getAllMessages();
-    }, 2000);
-  }
-
-  selectMessages(event: any) {
-    this.page = 1;
-    this.filtration['page'] = 1;
-    if (event.value !== 'all') {
-      this.filtration['isReadIt'] = event.value;
-    } else {
-      delete this.filtration['isReadIt'];
-    }
-    this.getAllMessages();
   }
 
   onTableDataChange(event: any) {
