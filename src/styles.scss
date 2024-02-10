@@ -1,6 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap-icons/font/bootstrap-icons.css';
 
+/*table */
+button {
+  color: #11101D;
+  margin: 0 5px;
+}
+
+:host ::ng-deep {
+  table {
+      th {
+          background-color: #11101D!important;
+          .mat-header-cell {
+              color: #FFF;
+          }
+      }
+  }
+}
+
+
+.mat-form-field {
+  width: 100%;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.table th, .table td {
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.table th {
+  font-size: 15px;
+  color: #FFF;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+
 
 /*style form auth*/
 .container img{

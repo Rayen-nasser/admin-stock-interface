@@ -1,47 +1,91 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <div class="navbar-brand">Shopping TN</div>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="/products" routerLinkActive="active"
-            >All Products <span class="sr-only">(current)</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/users" routerLinkActive="active"
-            >Users</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/carts" routerLinkActive="active"
-            >Carts</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/messages" routerLinkActive="active"
-            >Messages</a
-          >
+<div class="sidebar" [ngClass]="{ 'open ': sidebarOpen }">
+  <div class="logo-details">
+    <i class="bx bxl-c-plus-plus icon"></i>
+    <div class="logo_name">Shopping TN</div>
+    <i class="bx bx-menu" id="btn" (click)="toggleSidebar()"></i>
+  </div>
+  <ul class="nav-list">
+    <li>
+      <i class="bx bx-search" (click)="toggleSidebar()"></i>
+      <input
+        type="text"
+        placeholder="Search..."
+        id="searchInput"
+        (keyup)="updateSearchData($event)"
+      />
+      <span class="tooltip">Search</span>
+    </li>
+    <li
+      class="showMenu"
+      (click)="toggleSubMenu($event)"
+      [class.active]="isSubMenuVisible"
+    >
+      <a>
+        <i class="bx bx-collection"></i>
+        <span class="links_name">Category</span>
+        <i
+          class="bx bxs-chevron-up arrow"
+          style="margin-left: 60px"
+          *ngIf="sidebarOpen && isSubMenuVisible"
+        ></i>
+        <i
+          class="bx bxs-chevron-down arrow"
+          style="margin-left: 60px"
+          *ngIf="sidebarOpen && !isSubMenuVisible"
+        ></i>
+      </a>
+      <span class="tooltip">Category</span>
+      <ul class="sub-menu" *ngIf="isSubMenuVisible">
+        <li><a class="link_name">Category</a></li>
+        <li
+          (click)="updateCategoryData(category)"
+          *ngFor="let category of categories"
+        >
+          <a>{{ category }}</a>
         </li>
       </ul>
-      <div class="nav-item d-flex">
-        <button class="Btn" (click)="logout()">
-          <div class="sign">
-            <svg viewBox="0 0 512 512">
-              <path
-                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-              ></path>
-            </svg>
-          </div>
+    </li>
 
-          <div class="text">Logout</div>
-        </button>
+    <li>
+      <a routerLink="/products" routerLinkActive="active">
+        <i class="bx bx-grid-alt"></i>
+        <span class="links_name">Products</span>
+      </a>
+      <span class="tooltip">Products</span>
+    </li>
+    <li>
+      <a routerLink="/users" routerLinkActive="active">
+        <i class="bx bx-user"></i>
+        <span class="links_name">Users</span>
+      </a>
+      <span class="tooltip">Users</span>
+    </li>
+    <li>
+      <a routerLink="/messages" routerLinkActive="active">
+        <i class="bx bx-chat"></i>
+        <span class="links_name">Messages</span>
+      </a>
+      <span class="tooltip">Messages</span>
+    </li>
+    <li>
+      <a routerLink="/carts" routerLinkActive="active">
+        <i class="bx bx-cart-alt"></i>
+        <span class="links_name">Order</span>
+      </a>
+      <span class="tooltip">Order</span>
+    </li>
+    <li class="profile">
+      <div class="profile-details">
+        <img src="assets/profile.jpg" alt="profileImg" />
+        <div class="name_job">
+          <div class="name">{{ userDate.username }}</div>
+          <div class="job">{{ userDate.email }}</div>
+        </div>
       </div>
-    </div>
-  </div>
-</nav>
-
-<div class="container">
-  <router-outlet></router-outlet>
+      <i class="bx bx-log-out" id="log_out" (click)="logout()"></i>
+    </li>
+  </ul>
 </div>
+<section class="home-section">
+  <router-outlet></router-outlet>
+</section>

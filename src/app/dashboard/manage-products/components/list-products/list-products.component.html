@@ -8,59 +8,14 @@
     </button>
   </div>
 
-  <form>
-    <div class="row">
-      <div class="col-md-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Search</mat-label>
-          <input
-            matInput
-            placeholder="Name Product"
-            (keyup)="search($event.target)"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Categories</mat-label>
-          <mat-select (selectionChange)="selectCategory($event)">
-            <mat-option *ngFor="let category of categories" [value]="category">
-              {{ category }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input
-              matStartDate
-              placeholder="Start Date"
-              (dateChange)="selectDate($event.target, 'toDate')"
-            />
-            <input
-              matEndDate
-              placeholder="End Date"
-              (dateChange)="selectDate($event.target, 'fromDate')"
-            />
-          </mat-date-range-input>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-      </div>
-    </div>
-  </form>
 
-  <div class="listBox table-container">
+
+  <div class="listBox table-container ">
     <div class="mat-elevation-z8">
       <table
         mat-table
         [dataSource]="dataSource"
-        class="table table-hover responsive"
+        class="table table-hover responsive mt-5"
       >
         <!-- Number Column -->
         <ng-container matColumnDef="marque">
