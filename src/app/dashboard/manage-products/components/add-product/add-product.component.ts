@@ -27,7 +27,7 @@ export class AddProductComponent  implements OnInit{
     private toaster:ToastrService,
     private productsService: ProductsService
     ) {
-      this.getDataFromSubject()
+
     }
 
     ngOnInit(): void {
@@ -68,15 +68,13 @@ export class AddProductComponent  implements OnInit{
 
 
 
-    getAllCategories(){
-      this.productsService.getCategoriesData();
+    getAllCategories() {
+      this.productsService.getCategories().subscribe((response:any) => {
+        if(response.data && Array.isArray(response.data))
+          this.categories = ['all', ...response.data];
+      })
     }
 
-    getDataFromSubject(){
-      this.productsService.categoriesData.subscribe((response:any) => {
-          this.categories = response.data
-        })
-    }
 
     selectImage(event:any) {
 

@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit{
   page: number = 1;
   filtration: any = {
     page: this.page,
-    limit: 3,
+    limit: 5,
   };
   pageSizeOptions!: any;
   timeout: any
@@ -38,12 +38,14 @@ export class UsersComponent implements OnInit{
     private toaster: ToastrService,
     public dialog: MatDialog,
     private sharedService: SharedService,
-  ) { }
+  ) {
+    this.getAllUsers()
+   }
 
   ngOnInit(): void {
     combineLatest([
-      this.sharedService.getSearchData(),
-      this.sharedService.getOptionData()
+      this.sharedService.getSearchData('user'),
+      this.sharedService.getOptionData('user'),
     ]).pipe(
       debounceTime(1000),
       distinctUntilChanged(),
@@ -54,22 +56,19 @@ export class UsersComponent implements OnInit{
         this.setClientFilter(optionData);
       })
     ).subscribe();
-
-    this.getAllUsers();
   }
 
   private setClientFilter(optionData: string): void {
     if (!optionData) {
-      this.getAllUsers();
       return;
     }
 
-    if (optionData === 'all') {
-      delete this.filtration['isBeClient'];
+    if (optionData === 'clients') {
+      this.filtration['isBeClient'] = true;
     } else if (optionData === 'just visitor') {
       this.filtration['isBeClient'] = false;
     } else {
-      this.filtration['isBeClient'] = true;
+      delete this.filtration['isBeClient'];
     }
 
     this.service.getUsers(this.filtration).subscribe((res: any) => {
@@ -104,7 +103,7 @@ export class UsersComponent implements OnInit{
 
   toggleStatus(id: string) {
     this.service.changeStatus(id).subscribe((res: any) => {
-      this.toaster.success('User Status Updated Successfully');
+      this.toaster.success(res.message);
       this.page = 1;
       this.getAllUsers();
     });

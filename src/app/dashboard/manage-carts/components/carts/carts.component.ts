@@ -45,26 +45,24 @@ export class CartsComponent implements OnInit {
     private cartsService: CartsService,
     public dialog: MatDialog,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.getAllCarts();
+  }
 
   ngOnInit(): void {
     combineLatest([
-      this.sharedService.getSearchData(),
-      this.sharedService.getOptionData(),
+      this.sharedService.getOptionData('cart'),
     ])
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
-        tap(([searchData, optionData]) => {
+        tap(([ optionData]) => {
           this.page = 1;
           this.filtration['page'] = 1;
-          // this.filtration['username'] = searchData;
           this.setCartFilter(optionData);
         })
       )
       .subscribe();
-
-    this.getAllCarts();
   }
 
   private setCartFilter(optionData: string): void {
@@ -74,7 +72,7 @@ export class CartsComponent implements OnInit {
 
     if (optionData === 'all') {
       delete this.filtration['accepted'];
-    } else if (optionData === 'not yet') {
+    } else if (optionData === 'new order') {
       this.filtration['accepted'] = false;
     } else {
       this.filtration['accepted'] = true;

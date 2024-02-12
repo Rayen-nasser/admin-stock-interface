@@ -17,28 +17,23 @@
     </li>
     <li
       class="showMenu"
-      (click)="toggleSubMenu($event)"
       [class.active]="isSubMenuVisible"
     >
-      <a>
-        <i class="bx bx-collection"></i>
+      <a (click)="toggleSubMenu($event)">
+        <i class="bx bx-collection" (click)="toggleSidebar()"></i>
         <span class="links_name">Category</span>
-        <i
-          class="bx bxs-chevron-up arrow"
-          style="margin-left: 60px"
-          *ngIf="sidebarOpen && isSubMenuVisible"
+        <i class="bx arrow"
+          [ngClass]="{ 'bxs-chevron-up': isSubMenuVisible, 'bxs-chevron-down': !isSubMenuVisible }"
+          [style.display]="sidebarOpen ? 'block' : 'none'"
         ></i>
-        <i
-          class="bx bxs-chevron-down arrow"
-          style="margin-left: 60px"
-          *ngIf="sidebarOpen && !isSubMenuVisible"
-        ></i>
+
       </a>
       <span class="tooltip">Category</span>
-      <ul class="sub-menu" *ngIf="isSubMenuVisible">
+      <ul class="sub-menu " *ngIf="isSubMenuVisible">
         <li><a class="link_name">Category</a></li>
         <li
           (click)="updateCategoryData(category)"
+          [class.selected]="selectedCategory === category"
           *ngFor="let category of categories"
         >
           <a style="text-transform: capitalize;">{{ category }}</a>
@@ -76,7 +71,7 @@
     </li>
     <li class="profile">
       <div class="profile-details">
-        <img src="assets/profile.jpg" alt="profileImg" />
+        <img [src]="'assets/profile.jpg' || userDate?.profile  " alt="profileImg" />
         <div class="name_job">
           <div class="name">{{ userDate.username }}</div>
           <div class="job">{{ userDate.email }}</div>

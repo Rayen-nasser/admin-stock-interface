@@ -132,7 +132,7 @@ nav {
 
 
 /* Google Font Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -292,8 +292,8 @@ nav {
 .sidebar li .sub-menu {
   padding: 6px 6px 14px 50px;
   margin-top: -10px;
-  display: none; /* Initially hide the submenu */
-  transition: all 0.5s ease; /* Add transition for smooth animation */
+  display: none;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
   background: #1d1b31;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -301,14 +301,18 @@ nav {
 
 .sidebar li.showMenu .sub-menu {
   display: block;
-  transition: all 0.5s ease;
+  transition: transform 0.3s ease;
 }
 
 .sidebar li.showMenu .sub-menu .active{
   display: block;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
+.arrow {
+  margin-left: 60px;
+  transition: transform 0.3s ease; /* Add transition to transform property */
+}
 
 .sidebar li .sub-menu a {
   color: #fff;
@@ -482,4 +486,8 @@ nav {
     display: none;
   }
 }
+.selected {
+ text-decoration: underline white;
+}
 
+/* ============================================================================================*/

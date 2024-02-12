@@ -23,34 +23,41 @@ export class ListMessagesComponent implements OnInit {
     limit: 4,
   };
   pageSizeOptions!: any;
+  dataSource: any;
+  optionData$!: Observable<string>;
+  searchData$!: Observable<string>;
+
+  private previousSearchData: string = '';
+  private previousOptionData: string = '';
 
   constructor(
     private service: MessagesService,
     private toastr: ToastrService,
     private sharedService: SharedService
-  ) {}
-  dataSource: any;
-  optionData$!: Observable<string>;
-  searchData$!: Observable<string>;
+  ) {
+    this.getAllMessages();
+  }
 
   ngOnInit(): void {
     combineLatest([
-      this.sharedService.getSearchData(),
-      this.sharedService.getOptionData(),
+      this.sharedService.getSearchData('message'),
+      this.sharedService.getOptionData('message'),
     ])
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        tap(([searchData, optionData]) => {
-          this.page = 1;
-          this.filtration['page'] = 1;
-          this.filtration['subject'] = searchData;
-          this.setClientFilter(optionData);
-        })
-      )
-      .subscribe();
+    .pipe(
+      debounceTime(1000),
+      distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+      tap(([searchData, optionData]) => {
+        this.page = 1;
+        this.filtration['page'] = 1;
+        this.filtration['subject'] = searchData;
+        this.setClientFilter(optionData);
 
-    this.getAllMessages();
+        // Update previous values
+        this.previousSearchData = searchData;
+        this.previousOptionData = optionData;
+      })
+    )
+    .subscribe();
   }
 
   private setClientFilter(optionData: string): void {
@@ -60,7 +67,7 @@ export class ListMessagesComponent implements OnInit {
 
     if (optionData === 'all') {
       delete this.filtration['isReadIt'];
-    } else if (optionData === 'not yet') {
+    } else if (optionData === 'new message') {
       this.filtration['isReadIt'] = false;
     } else {
       this.filtration['isReadIt'] = true;

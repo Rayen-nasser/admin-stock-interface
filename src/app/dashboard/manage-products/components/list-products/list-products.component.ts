@@ -39,19 +39,21 @@ export class ListProductsComponent implements OnInit {
   };
   pageSizeOptions!: any;
   searchData$!: Observable<string>;
-  optionData$!: Observable<any>;
+  optionData$!: Observable<string>;
 
   constructor(
     public productsService: ProductsService,
     public dialog: MatDialog,
     private toaster: ToastrService,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.getAllProducts()
+  }
 
   ngOnInit(): void {
     combineLatest([
-      this.sharedService.getSearchData(),
-      this.sharedService.getOptionData(),
+      this.sharedService.getSearchData('product'),
+      this.sharedService.getOptionData('product'),
     ])
       .pipe(
         debounceTime(1000),
@@ -73,8 +75,6 @@ export class ListProductsComponent implements OnInit {
         })
       )
       .subscribe();
-
-    this.getAllProducts();
   }
 
   addProduct() {
@@ -118,8 +118,6 @@ export class ListProductsComponent implements OnInit {
   }
 
   onTableDataChange(event: any) {
-    console.log(event.pageIndex);
-
     this.page = event.pageIndex + 1;
     this.filtration.page = this.page;
     this.getAllProducts();
@@ -157,9 +155,9 @@ export class ListProductsComponent implements OnInit {
     });
   }
 
-  toggleStatus(id: string) {
+  toggleStatus(id: string, name: string ) {
     this.productsService.changeStatusProduct(id).subscribe((res: any) => {
-      this.toaster.success(res.message, 'Success');
+      this.toaster.success(res.message , 'Success');
       this.getAllProducts();
     });
   }

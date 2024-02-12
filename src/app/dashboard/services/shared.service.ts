@@ -5,27 +5,37 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  private searchDataSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  searchData$: Observable<string> = this.searchDataSubject.asObservable();
+  private searchDataSubject: { [key: string]: BehaviorSubject<string> } = {};
+  private optionDataSubject: { [key: string]: BehaviorSubject<string> } = {};
 
-  private optionDataSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  optionData$: Observable<string> = this.optionDataSubject.asObservable();
-
-  constructor() {}
-
-  setSearchData(data: string): void {
-    this.searchDataSubject.next(data);
+  constructor() {
+    this.initializeSubjects(['product', 'user', 'message', 'cart']);
   }
 
-  getSearchData(): Observable<string> {
-    return this.searchData$;
+  private initializeSubjects(types: string[]): void {
+    types.forEach(type => {
+      this.searchDataSubject[type] = new BehaviorSubject<string>('');
+      this.optionDataSubject[type] = new BehaviorSubject<string>('');
+    });
   }
 
-  setOptionData(data: string): void{
-    this.optionDataSubject.next(data);
+  setSearchData(type: string, data: string): void {
+    if (this.searchDataSubject[type]) {
+      this.searchDataSubject[type].next(data);
+    }
   }
 
-  getOptionData(): Observable<string> {
-    return this.optionData$;
+  getSearchData(type: string): Observable<string> {
+    return this.searchDataSubject[type].asObservable();
+  }
+
+  setOptionData(type: string, data: string): void {
+    if (this.optionDataSubject[type]) {
+      this.optionDataSubject[type].next(data);
+    }
+  }
+
+  getOptionData(type: string): Observable<string> {
+    return this.optionDataSubject[type].asObservable();
   }
 }

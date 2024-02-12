@@ -1,7 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { SharedService } from '../services/shared.service';
 import { ProductsService } from '../manage-products/service/products.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -9,67 +10,120 @@ import { ProductsService } from '../manage-products/service/products.service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  sidebarOpen: boolean = false;
-  isSubMenuVisible: boolean = false;
+  sidebarOpen = false;
+  isSubMenuVisible = false;
   userDate: any;
-  categories: any = [];
+  categories: string[] = [];
+  categoriesCached = false;
+  selectedCategory: string | null = null;
+  private optionDataSubscription: Subscription | undefined;
 
   constructor(
     private router: Router,
     private sharedService: SharedService,
-    private productsService: ProductsService,
-    private activeRoute: ActivatedRoute
+    private productsService: ProductsService
   ) {
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const urlAfterRedirects = event.urlAfterRedirects || '';
-        const url = event.url || '';
-        if(['/products', ].includes(urlAfterRedirects)){
-          this.getDataFromSubject();
-        }else if(['/users', ].includes(urlAfterRedirects)){
-          this.categories = ['all', 'clients', 'just visiter']
-        }else if(['/carts', ].includes(urlAfterRedirects)){
-          this.categories = ['all', 'accepted', 'not yet']
-        }else{
-          this.categories = ['all', 'read', 'not yet']
-        }
+        this.updateCategories(urlAfterRedirects);
       }
     });
   }
 
   ngOnInit(): void {
     this.getUserData();
-    this.getAllCategories()
-
   }
 
-  getAllCategories() {
-    this.productsService.getCategoriesData();
+  updateCategories(url: any): void {
+    switch (true) {
+      case url.includes('/products'):
+        this.fetchCategories();
+        break;
+      case url.includes('/users'):
+        this.categories = ['all', 'clients', 'just visitor'];
+        break;
+      case url.includes('/carts'):
+        this.categories = ['all', 'accepted', 'new order'];
+        break;
+      default:
+        this.categories = ['all', 'read', 'new message'];
+        break;
+    }
   }
 
-  getDataFromSubject() {
-    this.productsService.categoriesData.subscribe((response: any) => {
-      this.categories = ['all', ...response.data];
-    });
+  fetchCategories(): void {
+    this.productsService.getCategories().subscribe(
+      (response: any) => {
+        console.log(response);
+
+        if (response.categories && Array.isArray(response.categories)) {
+          this.categories = ['all', ...response.categories];
+          this.categoriesCached = true;
+        }
+      },
+      (error: any) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
   }
+
 
   updateCategoryData(value: any): void {
-    this.sharedService.setOptionData(value);
+    this.selectedCategory = value;
+    const dataType = this.getDataTypeFromRoute();
+    if (this.optionDataSubscription) {
+      this.optionDataSubscription.unsubscribe(); // Cancel existing subscription
+    }
+    this.optionDataSubscription = this.sharedService
+      .getOptionData(dataType)
+      .subscribe((currentOptionData) => {
+        if (value !== currentOptionData) {
+          this.sharedService.setOptionData(dataType, value);
+        }
+      });
   }
 
   updateSearchData(event: any): void {
-    this.sharedService.setSearchData(event.target.value);
+    const dataType = this.getDataTypeFromRoute();
+    const value = event.target.value;
+    if (this.optionDataSubscription) {
+      this.optionDataSubscription.unsubscribe(); // Cancel existing subscription
+    }
+    this.optionDataSubscription = this.sharedService
+      .getSearchData(dataType)
+      .subscribe((currentSearchData) => {
+        if (value !== currentSearchData) {
+          this.sharedService.setSearchData(dataType, value);
+        }
+      });
   }
 
-  getUserData() {
-    let token = localStorage.getItem('token');
+  private getDataTypeFromRoute(): string {
+    const currentRoute = this.router.url;
+    switch (true) {
+      case currentRoute.includes('/products'):
+        return 'product';
+      case currentRoute.includes('/users'):
+        return 'user';
+      case currentRoute.includes('/messages'):
+        return 'message';
+      case currentRoute.includes('/cart'):
+        return 'cart';
+      default:
+        console.error('Unknown route');
+        return '';
+    }
+  }
 
+  getUserData(): void {
+    const token = localStorage.getItem('token');
     if (token) {
       this.userDate = JSON.parse(window.atob(token.split('.')[1]));
     }
   }
 
-  logout() {
+  logout(): void {
     this.router.navigate(['/login']);
     localStorage.removeItem('token');
   }
@@ -77,18 +131,6 @@ export class LayoutComponent implements OnInit {
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
     this.isSubMenuVisible = false;
-    this.menuBtnChange();
-  }
-
-  menuBtnChange(): void {
-    const btnElement = document.getElementById('btn');
-    if (btnElement) {
-      if (this.sidebarOpen) {
-        btnElement.classList.replace('bx-menu', 'bx-menu-alt-right');
-      } else {
-        btnElement.classList.replace('bx-menu-alt-right', 'bx-menu');
-      }
-    }
   }
 
   toggleSubMenu(event: MouseEvent): void {

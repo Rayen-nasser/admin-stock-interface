@@ -13,9 +13,7 @@ export class UsersService {
     let params = new HttpParams();
     if (userFilter) {
       Object.entries(userFilter).forEach(([key, value]: any) => {
-        if (value) {
-          params = params.append(key, value);
-        }
+        params = params.append(key, value);
       });
     }
     return this.http.get(this.url + '/all-users', {params});
