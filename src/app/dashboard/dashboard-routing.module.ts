@@ -9,6 +9,13 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'dashboard',
+        loadChildren: () =>
+          import(`./recent-sales/recent-sales.module`).then(
+            (m) => m.RecentSalesModule
+          ),
+      },
+      {
         path: 'products',
         loadChildren: () =>
           import(`./manage-products/manage-products.module`).then(

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap-icons/font/bootstrap-icons.css';
+// @import '~bootstrap-icons/font/bootstrap-icons.css';
 // @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 /*table */
 button {
@@ -450,14 +450,80 @@ button {
     transition-duration: 0.3s;
   }
 
+  /* add btn  */
+
+  .add-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none !important;
+  }
+
+  .add-svgIcon {
+    width: 23px;
+    transition-duration: 0.3s;
+  }
+
+  .add-svgIcon path {
+    fill: white;
+  }
+
+  .add-button:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: 0.3s;
+    background-color: #86d993;
+    align-items: center;
+  }
+
+  .add-button:hover .add-svgIcon {
+    width: 25px;
+    transition-duration: 0.3s;
+    transform: translateY(60%);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+
+  .add-button::before {
+    display: none;
+    content: "Product";
+    color: white;
+    transition-duration: 0.3s;
+    font-size: 2px;
+  }
+
+  .add-button:hover::before {
+    display: block;
+    padding-right: 10px;
+    font-size: 18px;
+    opacity: 1;
+    transform: translateY(0px);
+    transition-duration: 0.3s;
+  }
+
+
 
 /* view btn*/
 .Btn_view {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -496,7 +562,7 @@ button {
   width: 0%;
   opacity: 0;
   color: white;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   transition-duration: 0.3s;
 }

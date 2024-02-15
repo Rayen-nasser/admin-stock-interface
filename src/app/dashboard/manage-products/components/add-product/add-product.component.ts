@@ -40,9 +40,10 @@ export class AddProductComponent  implements OnInit{
         name: [this.data?.name || "", [Validators.required, Validators.minLength(5)]],
         marque: [this.data?.marque || "", Validators.required],
         description: [this.data?.description || "", Validators.required],
-        deadline: [this.parseDate(this.data?.deadline) || "", Validators.required],
+        // deadline: [this.parseDate(this.data?.deadline) || "", Validators.required],
         imageUrl: [this.data?.imageUrl || "", Validators.required],
         price: [this.data?.price || null, [Validators.required]],
+        cost: [this.data?.cost || null, [Validators.required]],
         category: [this.data?.category || "", [Validators.required]],
         quantity: [this.data?.quantity || null, [Validators.required]],
       });
@@ -70,8 +71,7 @@ export class AddProductComponent  implements OnInit{
 
     getAllCategories() {
       this.productsService.getCategories().subscribe((response:any) => {
-        if(response.data && Array.isArray(response.data))
-          this.categories = ['all', ...response.data];
+          this.categories = response.categories
       })
     }
 

@@ -21,6 +21,7 @@ export class ListMessagesComponent implements OnInit {
   filtration: any = {
     page: this.page,
     limit: 4,
+   isReadIt: false
   };
   pageSizeOptions!: any;
   dataSource: any;

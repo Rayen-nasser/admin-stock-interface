@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class ProductsService {
 
-  // categoriesData = new BehaviorSubject({})
   url = environment.baseApi.replace('auth', 'stock')
 
   constructor(
@@ -36,14 +35,6 @@ export class ProductsService {
   getProductsInCategory(category: any){
     return this.http.get( this.url +'/category/'+  category)
   }
-
-  // getCategoriesData(){
-  //   this.getCategories().subscribe((res: any) => {
-  //     this.categoriesData.next({
-  //       data: res.categories
-  //     })
-  //   })
-  // }
 
   addProduct (product: any) {
     return this.http.post(this.url + "/add-product", product)

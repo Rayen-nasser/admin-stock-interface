@@ -45,13 +45,13 @@ export class CartsService {
   deleteCart(
     cartId: string
   ){
-    return this.http.delete(this.url+'/'+cartId);
+    return this.http.delete(this.url + '/' + cartId);
   }
 
-  getUserDetails(
-    userId: string
+  getCartDetails(
+    cartId: string
   ){
-    return this.http.get(environment.baseApi + "/user-details/" + userId)
+    return this.http.get(this.url + "/" + cartId)
   }
 
   acceptTheOrder(data: any){
@@ -63,5 +63,13 @@ export class CartsService {
       }
     })
     return this.http.get(this.url +  "/accept-order", {params})
+  }
+
+  deliveredOrder(id: string){
+    return this.http.get(this.url +  "/delivered-order/" + id)
+  }
+
+  returnOrder(id: string, data: any){
+    return this.http.put(this.url + '/returned-order/' + id , data)
   }
 }

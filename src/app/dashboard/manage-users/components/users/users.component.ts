@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit{
   page: number = 1;
   filtration: any = {
     page: this.page,
-    limit: 5,
+    limit: 4,
   };
   pageSizeOptions!: any;
   timeout: any

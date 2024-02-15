@@ -44,7 +44,7 @@ export class LayoutComponent implements OnInit {
         this.categories = ['all', 'clients', 'just visitor'];
         break;
       case url.includes('/carts'):
-        this.categories = ['all', 'accepted', 'new order'];
+        this.categories = ['all', 'Pending', 'new order','Returned', 'Delivered'];
         break;
       default:
         this.categories = ['all', 'read', 'new message'];

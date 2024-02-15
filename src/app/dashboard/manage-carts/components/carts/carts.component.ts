@@ -33,7 +33,7 @@ export class CartsComponent implements OnInit {
   total: number = 0;
   filtration: any = {
     page: this.page,
-    limit: 5,
+    limit: 4,
   };
   pageSizeOptions!: any;
   dataSource: any;
@@ -71,11 +71,16 @@ export class CartsComponent implements OnInit {
     }
 
     if (optionData === 'all') {
-      delete this.filtration['accepted'];
+      delete this.filtration['sale'];
     } else if (optionData === 'new order') {
-      this.filtration['accepted'] = false;
-    } else {
-      this.filtration['accepted'] = true;
+      this.filtration['sale'] = "wait";
+    }else if(optionData === 'Pending'){
+      this.filtration['sale'] = "Pending";
+    }
+    else if(optionData === 'Returned'){
+      this.filtration['sale'] = "Returned";
+    }else{
+      this.filtration['sale'] = "Delivered";
     }
 
     this.cartsService.getCarts(this.filtration).subscribe((res: any) => {
@@ -117,7 +122,7 @@ export class CartsComponent implements OnInit {
     });
   }
 
-  viewCart(products: any, userId: string, address: any, cartId: string) {
+  viewCart(cartId: string, userId: string) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '800px';
@@ -125,11 +130,8 @@ export class CartsComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.data = {
-      type: 'cart',
-      products,
-      userId,
-      address,
       cartId,
+      userId
     };
     const dialogRef = this.dialog.open(ViewCartComponent, dialogConfig);
 

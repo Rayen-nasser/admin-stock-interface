@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="listBox table-container">
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" class="table table-hover mt-5">
+      <table mat-table [dataSource]="dataSource" class="table table-hover">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -17,7 +17,7 @@
             <img
               [src]=" element?.profile || 'assets/profile.jpg'"
               alt="Profile Image"
-              style="height: 50px !important;border-radius: 50%;"
+              style="height: 35px !important;border-radius: 50%;"
             />
           </td>
         </ng-container>
@@ -84,7 +84,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <div class="mt-5 d-flex justify-content-center">
+      <div class="mt-4 d-flex justify-content-center">
         <mat-paginator
           (page)="onTableDataChange($event)"
           [length]="total"

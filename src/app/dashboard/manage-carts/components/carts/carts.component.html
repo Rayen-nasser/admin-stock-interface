@@ -5,7 +5,7 @@
       <table
         mat-table
         [dataSource]="dataSource"
-        class="table table-hover responsive mt-5"
+        class="table table-hover responsive"
       >
         <!-- Position Column -->
         <ng-container matColumnDef="userId">
@@ -55,10 +55,8 @@
                 class="Btn_view"
                 (click)="
                   viewCart(
-                    element.products,
-                    element.userId,
-                    element.address,
-                    element._id
+                    element._id,
+                    element.userId
                   )
                 "
               >

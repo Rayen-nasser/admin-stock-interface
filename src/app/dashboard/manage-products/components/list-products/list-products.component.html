@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div (click)="addProduct()" id="addProduct">
-    <button class="Btn-add">
-      <div class="text">Add Product</div>
-      <div class="sign">
-        <i class="bi bi-bookmark-plus"></i>
-      </div>
-    </button>
+      <button class="add-button">
+        <svg class="add-svgIcon"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.485 2 2 6.485 2 12s4.485 10 10 10 10-4.485 10-10S17.515 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm5-9h-4V7c0-.552-.447-1-1-1s-1 .448-1 1v4H7c-.553 0-1 .448-1 1s.447 1 1 1h4v4c0 .552.447 1 1 1s1-.448 1-1v-4h4c.553 0 1-.448 1-1s-.447-1-1-1z"/>
+        </svg>
+
+      </button>
   </div>
 
   <div class="listBox table-container">
@@ -13,7 +13,7 @@
       <table
         mat-table
         [dataSource]="dataSource"
-        class="table table-hover responsive mt-5"
+        class="table table-hover responsive "
       >
         <!-- Number Column -->
         <ng-container matColumnDef="marque">
@@ -44,7 +44,9 @@
         <!-- Deadline Column -->
         <ng-container matColumnDef="deadLineDate">
           <th mat-header-cell *matHeaderCellDef>DeadLine</th>
-          <td mat-cell *matCellDef="let element">{{ element.deadline }}</td>
+          <td mat-cell *matCellDef="let element">
+            {{ element.deadline | date : "dd MMM yyyy" }}
+          </td>
         </ng-container>
 
         <!-- Status Column -->

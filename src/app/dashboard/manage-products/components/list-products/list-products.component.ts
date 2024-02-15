@@ -35,7 +35,7 @@ export class ListProductsComponent implements OnInit {
   total: number = 0;
   filtration: any = {
     page: this.page,
-    limit: 5,
+    limit: 4,
   };
   pageSizeOptions!: any;
   searchData$!: Observable<string>;

@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { ManageProductsRoutingModule } from './manage-products-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     FormsModule,
     MaterialModule,
+    MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
