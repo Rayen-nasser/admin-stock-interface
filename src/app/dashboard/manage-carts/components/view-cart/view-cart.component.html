@@ -36,23 +36,23 @@
           <th>Price</th>
           <th style="width: 25%">Quantity</th>
           <th>Total</th>
-          <th *ngIf="btn === 'Pending'">Returned</th>
+          <th *ngIf="btn === 'pending'">Returned</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of productsCart; let index = index">
           <td><img src="{{ item.image }}" alt="" /></td>
           <td>{{ item.marque }}</td>
-          <td>{{ item.price }} Dt</td>
+          <td>{{ item.price }} TND</td>
           <td>
             <ng-container *ngIf="item.return">
               <div class="card__counter quantity">
-                <button (click)="decreaseQuantity(index)" class="card__btn">
+                <button (click)="decreaseQuantity(index, item._id)" class="card__btn">
                   -
                 </button>
                 <div class="card__counter-score">{{ item.quantity }}</div>
                 <button
-                  (click)="increaseQuantity(index)"
+                  (click)="increaseQuantity(index, item._id)"
                   class="card__btn card__btn-plus"
                 >
                   +
@@ -63,8 +63,8 @@
               {{ item.quantity }}
             </ng-container>
           </td>
-          <td>{{ (item.price * item.quantity).toFixed(2) }} Dt</td>
-          <ng-container *ngIf="btn === 'Pending'">
+          <td>{{ (item.price * item.quantity).toFixed(2) }} TND</td>
+          <ng-container *ngIf="btn === 'pending'">
             <td>
               <div class="checkbox-wrapper-8">
                 <input
@@ -116,7 +116,7 @@
         </button>
       </ng-container>
 
-      <ng-container *ngIf="btn === 'Pending'">
+      <ng-container *ngIf="btn === 'pending'">
         <div class="loader">
           <div class="truckWrapper">
             <div class="truckBody">

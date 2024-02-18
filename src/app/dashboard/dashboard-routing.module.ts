@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { AdminGuard } from '../core/guards/admin.guard';
+import { SalesComponent } from './recent-sales/components/sales/sales.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: '', 
+        component: SalesComponent,
+      },
       {
         path: 'dashboard',
         loadChildren: () =>

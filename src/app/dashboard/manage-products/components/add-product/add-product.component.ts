@@ -130,7 +130,7 @@ export class AddProductComponent  implements OnInit{
 
       if(hasChange){
         const dialogRef = this.matDialog.open(ConfirmationComponent, {
-          width: '750px',
+          width: '350px',
           disableClose: true
         });
 

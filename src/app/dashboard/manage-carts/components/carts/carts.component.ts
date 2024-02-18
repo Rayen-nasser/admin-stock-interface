@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { CartsService } from '../../service/carts.service';
-import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationComponent } from 'src/app/dashboard/manage-products/components/confirmation/confirmation.component';
 import { ViewCartComponent } from '../view-cart/view-cart.component';
@@ -13,6 +12,8 @@ import {
   tap,
 } from 'rxjs';
 import { SharedService } from 'src/app/dashboard/services/shared.service';
+import * as numeral from 'numeral';
+
 
 @Component({
   selector: 'app-carts',
@@ -21,13 +22,14 @@ import { SharedService } from 'src/app/dashboard/services/shared.service';
 })
 export class CartsComponent implements OnInit {
   displayedColumns: string[] = [
-    'userId',
+    'code',
+    'status',
     'date',
-    'quantity',
     'amountTotal',
     'view',
     'delete',
   ];
+  numeral = numeral;
 
   page: number = 1;
   total: number = 0;
@@ -74,13 +76,13 @@ export class CartsComponent implements OnInit {
       delete this.filtration['sale'];
     } else if (optionData === 'new order') {
       this.filtration['sale'] = "wait";
-    }else if(optionData === 'Pending'){
-      this.filtration['sale'] = "Pending";
+    }else if(optionData === 'pending'){
+      this.filtration['sale'] = "pending";
     }
-    else if(optionData === 'Returned'){
-      this.filtration['sale'] = "Returned";
+    else if(optionData === 'returned'){
+      this.filtration['sale'] = "returned";
     }else{
-      this.filtration['sale'] = "Delivered";
+      this.filtration['sale'] = "delivered";
     }
 
     this.cartsService.getCarts(this.filtration).subscribe((res: any) => {
@@ -108,7 +110,7 @@ export class CartsComponent implements OnInit {
   ConfirmDeleteCart(id: any) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.width = '500px';
+    dialogConfig.width = '350px';
     dialogConfig.height = 'auto';
     dialogConfig.disableClose = true;
     dialogConfig.data = {

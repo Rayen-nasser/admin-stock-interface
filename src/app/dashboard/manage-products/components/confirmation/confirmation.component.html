@@ -1,58 +1,50 @@
 <!-- DeleteTaskComponent template -->
 <mat-dialog-content>
-  <!-- Your dialog content goes here -->
-  <div class="modal-header">
-    <h5 class="modal-title">
-      Confirm {{ data ? "Delete " : "Ignorance Changes" }}
-    </h5>
-    <button mat-flat-button class="text-danger" (click)="closeAll()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>
-      Are you sure
+  <div class="header">
+    <div class="image">
+      <svg
+        aria-hidden="true"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        ></path>
+      </svg>
+    </div>
+    <div class="content">
+      <span class="title-confirm"
+        >Confirm {{ data ? "Delete " : "Ignorance Changes" }}</span
+      >
+      <p class="message">
+        Are you sure
+        {{
+          data
+            ? " to delete this " + data.type
+            : "That You Want To Discard Your Changes"
+        }}
+        ?
+      </p>
+    </div>
+    <div class="actions">
+      <button
+        class="desactivate"
+        type="button"
+        type="button"
+        (click)="confirmDelete()"
+      >
       {{
         data
-          ? " to delete " + data.type
-          : "That You Want To Discard Your Changes"
+          ? "Delete"
+          : "Yes"
       }}
-      ?
-    </p>
-  </div>
-  <div class="modal-footer">
-    <button
-      *ngIf="data"
-      type="button"
-      class="btn btn-danger"
-      (click)="confirmDelete()"
-    >
-      Delete
-    </button>
-    <button
-      *ngIf="data"
-      type="button"
-      class="btn btn-secondary"
-      (click)="closeAll()"
-    >
-      Close
-    </button>
 
-    <button
-      *ngIf="!data"
-      type="button"
-      class="btn btn-success"
-      (click)="closeAll()"
-    >
-      Yes
-    </button>
-    <button
-      *ngIf="!data"
-      type="button"
-      class="btn btn-danger"
-      (click)="closeOnlyDialogConfirm()"
-    >
-      No
-    </button>
+      </button>
+      <button class="cancel" type="button" (click)="closeAll()">Cancel</button>
+    </div>
   </div>
 </mat-dialog-content>

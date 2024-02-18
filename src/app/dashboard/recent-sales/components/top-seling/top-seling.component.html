@@ -1,0 +1,14 @@
+<div class="sales-boxes">
+  <div class="top-sales box">
+    <div class="title">Top Selling Product</div>
+    <ul class="top-sales-details">
+      <li *ngFor="let product of topSelling"  [@fadeInOut]>
+        <a>
+          <img [src]="product.imageUrl" [alt]="product.marque" />
+          <span class="product">{{ product.marque }}</span>
+        </a>
+        <span class="quantity text-start">TND {{ numeral(product.price).format('0,0') }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

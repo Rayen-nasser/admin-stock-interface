@@ -14,7 +14,7 @@ export class ViewCartComponent implements OnInit {
   returnedProducts: { productId: string; newQte: number; returnQte: number }[] = [];
   cart: any;
   btn!: string;
-  userDetail: any;
+  userDetail!: any;
   address!: any;
 
   constructor(
@@ -52,8 +52,10 @@ export class ViewCartComponent implements OnInit {
   }
 
   extractAddress(cartDetails: any) {
-    const { country, city, postcode, formatted } = cartDetails.properties;
-    this.address = { country, city, postcode, formatted };
+    if(cartDetails !== null && typeof cartDetails != 'undefined'){
+      const { country, city, postcode, formatted } = cartDetails?.properties;
+      this.address = { country, city, postcode, formatted };
+    }
   }
 
   acceptOrder() {
@@ -74,38 +76,35 @@ export class ViewCartComponent implements OnInit {
     });
   }
 
-  increaseQuantity(index: number) {
-    if (
-      this.productsCart[index].quantity < this.productsCart[index].originQte
-    ) {
-      this.productsCart[index].quantity++;
-      this.returnedProducts[index].returnQte--;
-    this.returnedProducts[index].newQte++;
-    }
+  increaseQuantity(index: number, id: string) {
+    this.productsCart[index].quantity++;
+    const findIndex = this.returnedProducts.findIndex(
+      (value: any) => value.productId === id
+    );
+    this.returnedProducts[findIndex].returnQte--;
+    this.returnedProducts[findIndex].newQte++;
   }
 
-  decreaseQuantity(index: any) {
+  decreaseQuantity(index: any, id: string) {
     this.productsCart[index].quantity--;
-    this.returnedProducts[index].returnQte++;
-    this.returnedProducts[index].newQte--;
-    // if (this.productsCart[index].quantity > 0) {
-    //   const updatedCart = [
-    //     ...this.productsCart.slice(0, index),
-    //     ...this.productsCart.slice(index + 1)
-    //   ];
 
-    //   this.productsCart = updatedCart;
-    // }
+    const findIndex = this.returnedProducts.findIndex(
+      (value: any) => value.productId === id
+    );
+    this.returnedProducts[findIndex].returnQte++;
+    this.returnedProducts[findIndex].newQte--;
   }
 
-  addToReturned(index: number,id: string, newQte: number, origin: number) {
-    this.productsCart[index].return = !this.productsCart[index].return
+  addToReturned(index: number, id: string, newQte: number, origin: number) {
+    if (!this.returnedProducts) {
+      this.returnedProducts = [];
+    }
+    this.productsCart[index].return = !this.productsCart[index].return;
     this.returnedProducts.push({
       productId: id,
       newQte,
       returnQte: origin - newQte,
     });
-
   }
 
   returnCart() {

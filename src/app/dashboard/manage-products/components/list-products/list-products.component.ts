@@ -12,6 +12,7 @@ import {
   tap,
 } from 'rxjs';
 import { SharedService } from 'src/app/dashboard/services/shared.service';
+import * as numeral from 'numeral';
 
 @Component({
   selector: 'app-list-products',
@@ -40,6 +41,7 @@ export class ListProductsComponent implements OnInit {
   pageSizeOptions!: any;
   searchData$!: Observable<string>;
   optionData$!: Observable<string>;
+  numeral = numeral;
 
   constructor(
     public productsService: ProductsService,
@@ -141,7 +143,7 @@ export class ListProductsComponent implements OnInit {
   ConfirmDeleteProduct(id: any) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.width = '500px';
+    dialogConfig.width = '350px';
     dialogConfig.height = 'auto';
     dialogConfig.disableClose = true;
     dialogConfig.data = {

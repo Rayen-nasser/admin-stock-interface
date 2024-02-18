@@ -1,0 +1,53 @@
+.sales-boxes {
+  display: flex;
+  margin-left: 20px;
+}
+
+.sales-boxes .top-sales {
+  width: 100%; /* Adjust as needed */
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 0 0 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sales-boxes .top-sales .title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.sales-boxes .top-sales li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.sales-boxes .top-sales li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.sales-boxes .top-sales li a img {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 15%;
+  margin-right: 15px;
+}
+
+.sales-boxes .top-sales li .product {
+  font-size: 16px;
+  font-weight: 500;
+  flex: 1; /* Allow the product name to flex to fill available space */
+}
+
+.sales-boxes .top-sales li .price {
+  font-size: 16px;
+  font-weight: 500;
+}

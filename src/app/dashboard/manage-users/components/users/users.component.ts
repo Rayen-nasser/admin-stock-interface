@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit{
   ConfirmDeleteUser(id: any) {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.width = '500px';
+    dialogConfig.width = '350px';
     dialogConfig.height = 'auto';
     dialogConfig.disableClose = true;
     dialogConfig.data = {

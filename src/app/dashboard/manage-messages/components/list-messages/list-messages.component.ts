@@ -20,7 +20,7 @@ export class ListMessagesComponent implements OnInit {
   page: number = 1;
   filtration: any = {
     page: this.page,
-    limit: 4,
+    limit: 6,
    isReadIt: false
   };
   pageSizeOptions!: any;

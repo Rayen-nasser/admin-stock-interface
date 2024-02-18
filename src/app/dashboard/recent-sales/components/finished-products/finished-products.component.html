@@ -1,0 +1,16 @@
+<div class="sales-boxes" style="margin-left: 0; margin-right: 20px;">
+  <div class="top-sales box">
+    <div class="title">Finished Products</div>
+    <ul class="top-sales-details" *ngIf="products.length > 0; else noProductsMessage" [@fadeInOut]>
+      <li *ngFor="let product of products">
+        <a>
+          <img [src]="product.imageUrl" [alt]="product.marque" />
+          <span class="product">{{ product.name }} ({{ product.marque }})</span>
+        </a>
+      </li>
+    </ul>
+    <ng-template #noProductsMessage>
+      <p *ngIf="!products.length" @fadeInOut>No finished products available.</p>
+    </ng-template>
+  </div>
+</div>
