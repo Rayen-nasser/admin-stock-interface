@@ -12,7 +12,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticatedGuard } from './core/guards/authenticated-guard.guard';
 
 
 @NgModule({

@@ -23,10 +23,6 @@ export class AuthService {
     return this.http.post(environment.baseApi + '/login', model);
   }
 
-  isAuthenticated(): boolean {
-    return !localStorage.getItem('token');
-  }
-  
   forgetPassword(email: string, urlPage: string) {
     return this.http.post(this.urlResetPassword + '/forget-password', {
       email,
