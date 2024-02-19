@@ -5,19 +5,17 @@ import { AuthService } from 'src/app/auth/components/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate {
+export class AuthenticatedGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.auth.validateUserToken()) {
-      return true;
-    } else {
-      this.router.navigate(['/login'], {
-        queryParams: {
-          returnUrl: state.url
-        }
-      });
+    if (this.auth.isAuthenticated()) {
+      // If the user is authenticated, prevent access to the login page
+      this.router.navigate(['/dashboard']); // Redirect to the dashboard or another page
       return false;
+    } else {
+      // If the user is not authenticated, allow access to the login page
+      return true;
     }
   }
 }

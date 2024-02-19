@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminGuard } from './core/guards/admin.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticatedGuard } from './core/guards/authenticated-guard.guard';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

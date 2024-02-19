@@ -9,6 +9,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AuthService {
   urlResetPassword: any = environment.baseApi.replace('/auth', '');
+  tokenDetails!: String;
 
   constructor(private http: HttpClient, private router: Router) {
     this.router.events.subscribe((event) => {
@@ -21,9 +22,11 @@ export class AuthService {
   login(model: Login) {
     return this.http.post(environment.baseApi + '/login', model);
   }
+
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    return !localStorage.getItem('token');
   }
+  
   forgetPassword(email: string, urlPage: string) {
     return this.http.post(this.urlResetPassword + '/forget-password', {
       email,
@@ -41,4 +44,16 @@ export class AuthService {
       { password }
     );
   }
+
+  validateUserToken(): boolean {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // Here you can add additional validation logic for the token if needed
+      return true; // Return true if the token exists and is valid
+    } else {
+      return false; // Return false if the token does not exist or is invalid
+    }
+  }
+
 }

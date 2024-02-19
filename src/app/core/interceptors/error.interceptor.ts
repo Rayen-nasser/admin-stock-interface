@@ -24,9 +24,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.toaster.error(error.error.message)
 
-        if(error.error.message == "Token Expired" || error.error.message == "jwt malformed"){
+        if(error.error.message == "Token expired" || error.error.message == "jwt malformed"){
           this.router.navigate(['/login'])
-          localStorage.removeItem('token')
         }
 
          throw error
