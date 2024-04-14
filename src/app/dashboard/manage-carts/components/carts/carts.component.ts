@@ -111,7 +111,7 @@ export class CartsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.width = '350px';
-    dialogConfig.height = 'auto';
+    // dialogConfig.height = 'auto';
     dialogConfig.disableClose = true;
     dialogConfig.data = {
       type: 'cart',

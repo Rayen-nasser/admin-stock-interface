@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseApi:'http://localhost:5000/api/auth'
+  baseApi:'https://server-shopping-romd.onrender.com/api/auth'
 
 
 };
