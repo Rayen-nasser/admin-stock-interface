@@ -1,27 +1,39 @@
-# MakertAdmin
+# Admin Stock Interface
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
+Welcome to the Admin Stock Interface repository!
 
-## Development server
+## Introduction
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Admin Stock Interface is a web-based application designed to streamline stock management tasks for businesses. Whether you're a small retailer or a large distributor, this interface provides the tools you need to efficiently manage your inventory, analyze sales data, and make informed decisions.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Inventory Management:** Keep track of stock levels, update quantities, and manage product information.
+- **Sales Analysis:** Gain insights into sales trends, identify top-performing products, and forecast demand.
+- **User-Friendly Interface:** Intuitive design makes it easy to navigate and perform tasks efficiently.
+- **Customization:** Tailor the interface to your specific business needs with customizable settings and options.
 
-## Build
+## Demo
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Check out the live demo https://adminshoppingtn.netlify.app/
+## Getting Started
 
-## Running unit tests
+To get started with the Admin Stock Interface, follow these steps:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. **Clone the Repository:**
+git clone https://github.com/Rayen-nasser/admin-stock-interface.git
 
-## Running end-to-end tests
+3. **Install Dependencies:**
+npm install
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+4. **Run the Application:**
+npm start
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+5. **Open in Browser:**
+Visit http://localhost:4200 in your web browser to access the application.
+
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to the Admin Stock Interface project.
+
