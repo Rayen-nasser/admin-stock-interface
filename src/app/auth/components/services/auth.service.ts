@@ -42,6 +42,8 @@ export class AuthService {
   }
 
   validateUserToken(): boolean {
+    //@TODO: Valid role admin and use Details from token
+    //@TODO: make message clear when if user want to login in app of admin
     const token = localStorage.getItem('token');
 
     if (token) {
