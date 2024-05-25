@@ -13,6 +13,10 @@ Admin Stock Interface is a web-based application designed to streamline stock ma
 - **User-Friendly Interface:** Intuitive design makes it easy to navigate and perform tasks efficiently.
 - **Customization:** Tailor the interface to your specific business needs with customizable settings and options.
 
+## Demo
+
+Check out the live demo [here]([https://example.com](https://adminshoppingtn.netlify.app/)).
+
 ## Getting Started
 
 To get started with the Admin Stock Interface, follow these steps:
@@ -32,9 +36,5 @@ Visit http://localhost:4200 in your web browser to access the application.
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to the Admin Stock Interface project, please follow our [Contribution Guidelines](CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+Contributions are welcome! If you'd like to contribute to the Admin Stock Interface project.
 
