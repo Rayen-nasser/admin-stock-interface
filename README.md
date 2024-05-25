@@ -15,7 +15,7 @@ Admin Stock Interface is a web-based application designed to streamline stock ma
 
 ## Demo
 
-Check out the live demo https://adminshoppingtn.netlify.app/login?returnUrl=%2F
+Check out the live demo https://adminshoppingtn.netlify.app/login
 ## Getting Started
 
 To get started with the Admin Stock Interface, follow these steps:
