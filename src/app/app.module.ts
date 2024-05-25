@@ -37,4 +37,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [AdminGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    localStorage.removeItem('token');
+  }
+ }

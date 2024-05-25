@@ -12,7 +12,6 @@ export class AdminGuard implements CanActivate {
     if (this.auth.validateUserToken()) {
       return true;
     } else {
-      'token' in localStorage ?? localStorage.removeItem('token')
       this.router.navigate(['/login'], {
         queryParams: {
           returnUrl: state.url
